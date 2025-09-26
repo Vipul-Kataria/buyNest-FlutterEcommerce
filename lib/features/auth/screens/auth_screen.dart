@@ -1,3 +1,5 @@
+import 'package:amazon_clone/commons/widgets/custom_button.dart';
+import 'package:amazon_clone/commons/widgets/custom_text_field.dart';
 import 'package:amazon_clone/constants/global_variables.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +14,19 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _nameController.dispose();
+  }
+
   Auth _auth = Auth.signup;
   @override
   Widget build(BuildContext context) {
@@ -28,7 +43,7 @@ class _AuthScreenState extends State<AuthScreen> {
               ),
               SizedBox(
                 width: double.infinity,
-                child: SegmentedButton<Auth>(
+                child: SegmentedButton(
                   segments: [
                     const ButtonSegment(
                       value: Auth.signup,
@@ -39,7 +54,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       label: Text("Sign-In"),
                     ),
                   ],
-                  selected:{_auth},
+                  selected: {_auth},
                   onSelectionChanged: (Set newSelection) {
                     setState(() {
                       _auth = newSelection.first;
@@ -47,6 +62,44 @@ class _AuthScreenState extends State<AuthScreen> {
                   },
                 ),
               ),
+              if (_auth == Auth.signup)
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      CustomTextField(
+                        mycontroller: _emailController,
+                        hintText: "Email",
+                      ),
+                      CustomTextField(
+                        mycontroller: _passwordController,
+                        hintText: "Passowrd",
+                      ),
+                      CustomTextField(
+                        mycontroller: _nameController,
+                        hintText: "User",
+                      ),
+                      CustomButton(text: "Sign-Up", onTap: () {}),
+                    ],
+                  ),
+                ),
+              if (_auth == Auth.signin)
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      CustomTextField(
+                        mycontroller: _emailController,
+                        hintText: "Email",
+                      ),
+                      CustomTextField(
+                        mycontroller: _passwordController,
+                        hintText: "Passowrd",
+                      ),
+                      CustomButton(text: "Sign-In", onTap: () {}),
+                    ],
+                  ),
+                ),
             ],
           ),
         ),
