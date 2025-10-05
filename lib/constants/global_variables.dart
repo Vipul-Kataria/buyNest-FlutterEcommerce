@@ -1,4 +1,9 @@
+
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+final String uri = dotenv.env['API_BASE_URI'] ?? "http://fallback-url.com";
+
 class GlobalVariables {
   // COLORS
   static const appBarGradient = LinearGradient(

@@ -1,6 +1,9 @@
+
+
 import 'package:amazon_clone/commons/widgets/custom_button.dart';
 import 'package:amazon_clone/commons/widgets/custom_text_field.dart';
 import 'package:amazon_clone/constants/global_variables.dart';
+import 'package:amazon_clone/features/auth/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 enum Auth { signin, signup }
@@ -17,7 +20,9 @@ class _AuthScreenState extends State<AuthScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  final _signinformKey = GlobalKey<FormState>();
+  final _signupformKey = GlobalKey<FormState>();
+  AuthService authService = AuthService();
 
   @override
   void dispose() {
@@ -28,6 +33,22 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   Auth _auth = Auth.signup;
+  void signUpUser() {
+    authService.signUpUser(
+      context: context,
+      email: _emailController.text,
+      password: _passwordController.text,
+      name: _nameController.text,
+    );
+  }
+  void signInUser(){
+    authService.signInUser(
+      context: context,
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,9 +83,10 @@ class _AuthScreenState extends State<AuthScreen> {
                   },
                 ),
               ),
+
               if (_auth == Auth.signup)
                 Form(
-                  key: _formKey,
+                  key: _signupformKey,
                   child: Column(
                     children: [
                       CustomTextField(
@@ -79,13 +101,20 @@ class _AuthScreenState extends State<AuthScreen> {
                         mycontroller: _nameController,
                         hintText: "User",
                       ),
-                      CustomButton(text: "Sign-Up", onTap: () {}),
+                      CustomButton(
+                        text: "Sign-Up",
+                        onTap: () {
+                          if (_signupformKey.currentState!.validate()) {
+                            signUpUser();
+                          }
+                        },
+                      ),
                     ],
                   ),
                 ),
               if (_auth == Auth.signin)
                 Form(
-                  key: _formKey,
+                  key: _signinformKey,
                   child: Column(
                     children: [
                       CustomTextField(
@@ -96,7 +125,11 @@ class _AuthScreenState extends State<AuthScreen> {
                         mycontroller: _passwordController,
                         hintText: "Passowrd",
                       ),
-                      CustomButton(text: "Sign-In", onTap: () {}),
+                      CustomButton(text: "Sign-In", onTap: () {
+                        if (_signinformKey.currentState!.validate()) {
+                            signInUser();
+                          }
+                      }),
                     ],
                   ),
                 ),
