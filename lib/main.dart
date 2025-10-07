@@ -1,9 +1,9 @@
 import 'package:amazon_clone/Providers/user_provider.dart';
+import 'package:amazon_clone/commons/widgets/bottom_bar.dart';
 import 'package:amazon_clone/constants/global_variables.dart';
 import 'package:amazon_clone/constants/router.dart';
 import 'package:amazon_clone/features/auth/screens/auth_screen.dart';
 import 'package:amazon_clone/features/auth/services/auth_service.dart';
-import 'package:amazon_clone/features/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart'; // ✅ import flutter_dotenv
@@ -14,12 +14,11 @@ Future<void> main() async {
 
   // Load the .env file (from project root)
   await dotenv.load(fileName: ".env");
+  
 
   runApp(
     MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => UserProvider())
-      ],
+      providers: [ChangeNotifierProvider(create: (context) => UserProvider())],
       child: const MyApp(),
     ),
   );
@@ -56,7 +55,7 @@ class _MyAppState extends State<MyApp> {
       ),
       onGenerateRoute: (routeSettings) => generateRoute(routeSettings),
       home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-          ? const HomeScreen()
+          ? const BottomBar()
           : const AuthScreen(),
     );
   }
