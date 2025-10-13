@@ -1,12 +1,15 @@
+import 'package:amazon_clone/constants/global_variables.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController mycontroller;
   final String hintText;
+  final int maxLines;
   const CustomTextField({
     super.key,
     required this.mycontroller,
     required this.hintText,
+    this.maxLines=1,
   });
 
   @override
@@ -15,12 +18,12 @@ class CustomTextField extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
         controller: mycontroller,
-        cursorColor: Colors.black38,
+        cursorColor: GlobalVariables.secondaryColor,
         decoration: InputDecoration(
           hintText: hintText,
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(7),
-            borderSide: BorderSide(color: Colors.black),
+            borderSide: BorderSide(color: GlobalVariables.secondaryColor),
           ),
 
           border: OutlineInputBorder(
@@ -34,6 +37,7 @@ class CustomTextField extends StatelessWidget {
           }
           return null;
         },
+        maxLines: maxLines,
       ),
     );
   }

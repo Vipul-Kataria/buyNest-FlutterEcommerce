@@ -2,6 +2,7 @@ import 'package:amazon_clone/Providers/user_provider.dart';
 import 'package:amazon_clone/commons/widgets/bottom_bar.dart';
 import 'package:amazon_clone/constants/global_variables.dart';
 import 'package:amazon_clone/constants/router.dart';
+import 'package:amazon_clone/features/admin/screen/admin_screen.dart';
 import 'package:amazon_clone/features/auth/screens/auth_screen.dart';
 import 'package:amazon_clone/features/auth/services/auth_service.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,6 @@ Future<void> main() async {
 
   // Load the .env file (from project root)
   await dotenv.load(fileName: ".env");
-  
 
   runApp(
     MultiProvider(
@@ -55,7 +55,9 @@ class _MyAppState extends State<MyApp> {
       ),
       onGenerateRoute: (routeSettings) => generateRoute(routeSettings),
       home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-          ? const BottomBar()
+          ? Provider.of<UserProvider>(context).user.type == "user"
+                ? const BottomBar()
+                : AdminScreen()
           : const AuthScreen(),
     );
   }

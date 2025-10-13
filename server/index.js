@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require("express");
 const mongoose = require('mongoose');
 const authRouter = require("./route/auth.js");
+const adminRouter=require("./route/admin.js")
 const User = require("../server/models/user.js")
 const bcrypt = require('bcrypt');
 const jwt=require("jsonwebtoken")
@@ -14,6 +15,7 @@ const PORT = 3000;
 //IMPORTING OTHER LOCAL FILES
 app.use(express.json());
 app.use(authRouter);
+app.use(adminRouter)
 
 //MONGODB connection
 const DB = process.env.MONGO_URI;
