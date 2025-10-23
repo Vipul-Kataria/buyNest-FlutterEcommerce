@@ -7,7 +7,8 @@ const adminRouter=require("./route/admin.js")
 const User = require("../server/models/user.js")
 const bcrypt = require('bcrypt');
 const jwt=require("jsonwebtoken")
-const auth=require("./middlewares/auth.js")
+const auth=require("./middlewares/auth.js");
+const productRouter = require('./route/product.js');
 //MAKING BASIC CALLS
 const app = express();
 const PORT = 3000;
@@ -16,7 +17,7 @@ const PORT = 3000;
 app.use(express.json());
 app.use(authRouter);
 app.use(adminRouter)
-
+app.use(productRouter)
 //MONGODB connection
 const DB = process.env.MONGO_URI;
 mongoose.connect(DB)
