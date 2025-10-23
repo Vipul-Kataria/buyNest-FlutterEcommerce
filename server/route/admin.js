@@ -30,7 +30,7 @@ adminRouter.get("/admin/get-products",admin,async(req,res,next)=>{
         res.status(500).json({ error: error.message });
     }
 })
-module.exports=adminRouter;
+
 
 adminRouter.post("/admin/delete-product",admin,async(req,res,next)=>{
     try {
@@ -41,3 +41,5 @@ adminRouter.post("/admin/delete-product",admin,async(req,res,next)=>{
          res.status(500).json({ error: error.message });
     }
 })
+
+module.exports=adminRouter;

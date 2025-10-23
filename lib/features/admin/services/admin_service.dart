@@ -82,7 +82,7 @@ class AdminService {
               Product.fromJson(jsonEncode(jsonDecode(res.body)[i])),
             );
           }
-          print(productList);
+          // print(productList);
         },
       );
     } catch (e) {
